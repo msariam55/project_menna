@@ -17,10 +17,15 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.35.6' # ✅ الإصدار المطلوب
+          flutter-version: '3.35.6'
 
       - name: Install dependencies
         run: flutter pub get
+
+      - name: Fix bluetooth library namespace
+        run: |
+          sed -i '1i\android { namespace "io.github.edufolly.flutter_bluetooth_serial" }' \
+          $HOME/.pub-cache/hosted/pub.dev/flutter_bluetooth_serial-0.4.0/android/build.gradle
 
       - name: Verify Flutter setup
         run: flutter doctor -v
